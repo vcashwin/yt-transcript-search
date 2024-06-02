@@ -1,30 +1,16 @@
-# React + TypeScript + Vite
+# Overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple chrome extension that lets you search within the YouTube video's transcript to be able to navigate timestamps smoothly.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [ ] Upon clicking the extension it should load correctly
+- [ ] Upon switching between videos the transcript should corresponding to the right video and timestamps should be navigable
+- [ ] Extension should start running on startup and whenever a youtube video url is seen should enable the transcript window
+- [ ] Supports both light and dark mode
 
-## Expanding the ESLint configuration
+## UI Screenshots
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+![dark-bg](public/dark.png)
 
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+![light-bg](public/light.png)
