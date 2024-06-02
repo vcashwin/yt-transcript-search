@@ -56,7 +56,9 @@ function App() {
               );
               if (
                 textElement &&
-                textElement.textContent?.toLowerCase().includes(query)
+                textElement.textContent
+                  ?.toLowerCase()
+                  .includes(query.toLowerCase())
               ) {
                 matchingIndices.set(index, true); // Store the index of the matching segment
               }
