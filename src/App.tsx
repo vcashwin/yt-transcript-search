@@ -20,6 +20,7 @@ function App() {
             '[aria-label="Show transcript"]'
           ) as HTMLButtonElement;
           transcriptButton?.click();
+
           function searchAndFilterTranscriptSegments(query: string) {
             if (query === "") {
               // If the query is empty, show all segments
@@ -53,7 +54,10 @@ function App() {
               const textElement = segment.querySelector(
                 "yt-formatted-string.segment-text"
               );
-              if (textElement && textElement.textContent?.includes(query)) {
+              if (
+                textElement &&
+                textElement.textContent?.toLowerCase().includes(query)
+              ) {
                 matchingIndices.set(index, true); // Store the index of the matching segment
               }
             });
@@ -70,6 +74,7 @@ function App() {
               segment.classList.add("hidden");
             });
           }
+
           function debounce(func: (...args: any[]) => void, delay: number) {
             let timeoutId: ReturnType<typeof setTimeout>;
             return function (this: any, ...args: any[]) {
