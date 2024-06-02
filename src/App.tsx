@@ -140,6 +140,19 @@ function App() {
             titleHeaderRenderer?.appendChild(inputContainer);
           }
 
+          const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+              if (mutation.addedNodes.length > 0) {
+                const existingSearchBox = findElement(SELECTORS.SearchBox);
+                if (existingSearchBox) {
+                  existingSearchBox.remove();
+                  observer.disconnect();
+                }
+              }
+            });
+          });
+          observer.observe(document.body, { childList: true, subtree: true });
+
           clickElement(SELECTORS.ExpandButton);
           clickElement(SELECTORS.TranscriptButton);
           addInputBox();
