@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "version": "1.0",
-  "name": "My Vite Extension",
+  "name": "yt-transcript-search",
   "action": {
     "default_popup": "index.html"
   },
