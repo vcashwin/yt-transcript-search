@@ -88,6 +88,31 @@ function App() {
             };
           }
 
+          const removeExistingSearchBox = () => {
+            const existingSearchBox = document.querySelector(
+              "ytd-transcript-search-box-renderer"
+            );
+            if (existingSearchBox) {
+              existingSearchBox.remove();
+              return true; // Indicate that the search box was found and removed
+            }
+            return false;
+          };
+
+          // Use MutationObserver to watch for changes to the DOM and remove the search box immediately
+          const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+              if (mutation.addedNodes.length > 0) {
+                if (removeExistingSearchBox()) {
+                  // If the search box is found and removed, disconnect the observer
+                  observer.disconnect();
+                }
+              }
+            });
+          });
+
+          // Start observing the document for added nodes
+          observer.observe(document.body, { childList: true, subtree: true });
           function addInputBox() {
             // Select the engagement panel section list renderer by target ID
             const engagementPanel = document.querySelector(
@@ -99,15 +124,53 @@ function App() {
               "ytd-engagement-panel-title-header-renderer"
             );
 
+            // Remove the existing search box element if it exists
+            const existingSearchBox = document?.querySelector(
+              "ytd-transcript-search-box-renderer"
+            );
+            if (existingSearchBox) {
+              existingSearchBox.remove();
+            }
+
+            if (
+              titleHeaderRenderer?.querySelector(
+                ".custom-transcript-search-box"
+              )
+            ) {
+              return;
+            }
+
+            // Create the div element
+            const inputContainer = document.createElement("div");
+
+            // Style the div container
+            inputContainer.classList.add("custom-transcript-search-box"); // Set ID
+            inputContainer.style.width = "100%"; // Set max width
+            inputContainer.style.color = "var(--yt-spec-text-primary)"; // Set text color
+            inputContainer.style.backgroundColor =
+              "var(--yt-spec-brand-background-primary)"; // Set background color
+            inputContainer.style.paddingBottom = "8px";
+
             // Create the input element
             const inputBox = document.createElement("input");
             inputBox.setAttribute("type", "text");
-            inputBox.setAttribute("placeholder", "Search transcript...");
-            inputBox.setAttribute("id", "transcript-search-input");
+            inputBox.setAttribute(
+              "placeholder",
+              "Search for keyword in video..."
+            );
 
+            // Style the input box
             inputBox.style.width = "-webkit-fill-available"; // Set max width
-            inputBox.style.padding = "8px"; // Add padding
+            inputBox.style.padding = "12px"; // Add padding
+            inputBox.style.margin = "0 16px"; // Add margin
             inputBox.style.borderRadius = "4px"; // Add border radius
+            inputBox.style.borderWidth = "0px"; // Add border width
+            inputBox.style.backgroundColor =
+              "var(--yt-spec-badge-chip-background)"; // Set background color
+            inputBox.style.color = "var(--yt-spec-text-primary)"; // Set text color
+            inputBox.style.caretColor = "var(--yt-spec-themed-blue)"; // Set caret color
+
+            // Add debounce to the input event listener
             inputBox.addEventListener(
               "input",
               debounce(function () {
@@ -115,10 +178,13 @@ function App() {
                 const query = inputBox.value.trim();
                 searchAndFilterTranscriptSegments(query);
               }, 300)
-            );
+            ); // Adjust debounce delay as needed
 
-            // Append the input element to the title header renderer
-            titleHeaderRenderer?.appendChild(inputBox);
+            // Append the input element to the div container
+            inputContainer.appendChild(inputBox);
+
+            // Append the div container to the title header renderer
+            titleHeaderRenderer?.appendChild(inputContainer);
           }
 
           // Call the function to add the input box
