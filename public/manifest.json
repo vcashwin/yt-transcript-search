@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "version": "1.0",
+  "name": "My Vite Extension",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": ["scripting", "activeTab", "tabs"],
+  "host_permissions": ["http://localhost:5173/*"]
+}
